@@ -6,9 +6,16 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 bot.start((ctx) => ctx.reply(`Welcome ${ctx.message.from.first_name}`))
 bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
+bot.on('text', async (ctx) => {
+    let data = {}
+    data = await api.getReportsByCountries('belarus')
+    ctx.reply(data)
+})
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.launch()
 
 // Enable graceful stop
 process.once('SIGINT', () => bot.stop('SIGINT'))
 process.once('SIGTERM', () => bot.stop('SIGTERM'))
+
+console.log('bot launched')
