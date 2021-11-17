@@ -8,8 +8,14 @@ bot.help((ctx) => ctx.reply('Send me a sticker'))
 bot.on('sticker', (ctx) => ctx.reply('👍'))
 bot.on('text', async (ctx) => {
     let data = {}
-    data = await api.getReportsByCountries('belarus')
-    ctx.reply(data)
+    data = await api.getReportsByCountries(ctx.message.text)
+    const formatData = `
+    Country: ${data[0][0].country}
+    Cases: ${data[0][0].cases}
+    Deaths: ${data[0][0].deaths}
+    Recoverd: ${data[0][0].recovered}
+    `
+    ctx.reply(formatData)
 })
 bot.hears('hi', (ctx) => ctx.reply('Hey there'))
 bot.launch()
